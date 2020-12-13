@@ -2,9 +2,13 @@ package com.imobile3.groovypayments.ui.checkout;
 
 import android.content.Context;
 
+import com.imobile3.groovypayments.MainApplication;
 import com.imobile3.groovypayments.concurrent.GroovyExecutors;
 import com.imobile3.groovypayments.data.PaymentTypeRepository;
+import com.imobile3.groovypayments.data.model.ClientSecretKeyResponse;
 import com.imobile3.groovypayments.data.model.PaymentType;
+import com.imobile3.groovypayments.manager.CartManager;
+import com.imobile3.groovypayments.network.WebServiceManager;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -36,6 +40,25 @@ public class CheckoutViewModel extends ViewModel {
             List<PaymentType> resultSet = mRepository.getPaymentTypes(context);
             observable.postValue(resultSet);
         });
+
+        return observable;
+    }
+
+    public LiveData<ClientSecretKeyResponse> getClientSecretKey()
+    {
+        final MutableLiveData<ClientSecretKeyResponse> observable = new MutableLiveData<>();
+        WebServiceManager.getInstance().generateClientSecret(MainApplication.getInstance(),
+                CartManager.getInstance().getCart().getGrandTotal(), new WebServiceManager.ClientSecretCallback() {
+                    @Override
+                    public void onClientSecretError(@NonNull String message) {
+                        observable.postValue(new ClientSecretKeyResponse(message, null));
+                    }
+
+                    @Override
+                    public void onClientSecretGenerated(@NonNull String clientSecret) {
+                        observable.postValue(new ClientSecretKeyResponse(null, clientSecret));
+                    }
+                });
 
         return observable;
     }
