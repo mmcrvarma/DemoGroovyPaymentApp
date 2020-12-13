@@ -86,7 +86,21 @@ public class OrderEntryActivity extends BaseActivity {
 
     private void loadProducts() {
         getViewModel().getProducts()
-                .observe(this, data -> mProductListAdapter.setItems(data));
+                .observe(this, data ->
+                {
+                   if(data.getProducts() != null)
+                   {
+                       mProductListAdapter.setItems(data.getProducts());
+                   }
+                   else
+                   {
+                       //Show dialog with error message from API
+                       showAlertDialog(
+                               getString(R.string.common_server_response_title),
+                               data.getServerMessage(), getString(R.string.common_ok), null);
+
+                   }
+                });
     }
 
     private void handleProductClick(@NonNull Product product) {
