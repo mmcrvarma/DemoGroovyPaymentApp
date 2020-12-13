@@ -82,6 +82,8 @@
     <string name="order_history_alert_warning_button">Whatever.</string>
     <string name="order_history_alert_warning_message">You were warned not to click the list items.
         Administrators have been notified.</string>
+    <string name="order_history_retrieve_carts_success">Success.</string>
+    <string name="order_history_retrieve_carts_failure">Failure.</string>
 
     <!--Daily Report-->
     <string name="daily_report_subtitle">Daily Report</string>

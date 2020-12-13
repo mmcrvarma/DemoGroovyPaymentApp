@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Observer;
 
 public class OrderHistoryActivity extends BaseActivity {
 
@@ -38,13 +41,36 @@ public class OrderHistoryActivity extends BaseActivity {
         mCartListRecyclerView.setAdapter(mCartListAdapter);
         mCartListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // TODO: Load order history (Cart data models) from the database
+        //Load the cart products.
+        loadCartProducts();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    private void loadCartProducts()
+    {
+        getViewModel().getCarts().observe(this, data ->
+        {
+            if(data.getCarts() != null)
+            {
+                //Sort the collections in such a way, that latest cart is on top.
+                Collections.sort(data.getCarts(), (o1, o2) -> {
+                    if (o1.getDateCreated() == null || o2.getDateCreated() == null)
+                        return 0;
+                    return o2.getDateCreated().compareTo(o1.getDateCreated());
+                });
+                mCartListAdapter.setItems(data.getCarts());
+            }
+            else
+            {
+                showAlertDialog(getString(R.string.common_server_response_title), data.getServerMessage(),
+                        getString(R.string.common_ok), null);
+            }
+        });
     }
 
     @Override
