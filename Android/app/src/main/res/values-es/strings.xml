@@ -20,6 +20,7 @@
         elementum lacus elit nec diam. Nullam laoreet dui id dui facilisis lacinia. Sed convallis
         feugiat ex, interdum tincidunt sapien consequat ut.</string>
     <string name="reports">Informes</string>
+    <string name="common_server_response_title">Server Response</string>
 
     <!-- Login -->
     <string name="prompt_email">Email</string>

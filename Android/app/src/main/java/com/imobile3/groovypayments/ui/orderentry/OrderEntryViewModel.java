@@ -4,6 +4,7 @@ import com.imobile3.groovypayments.concurrent.GroovyExecutors;
 import com.imobile3.groovypayments.data.ProductRepository;
 import com.imobile3.groovypayments.data.Result;
 import com.imobile3.groovypayments.data.model.Product;
+import com.imobile3.groovypayments.data.model.ProductResponseModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,20 +25,23 @@ public class OrderEntryViewModel extends ViewModel {
         mRepository = repository;
     }
 
-    public LiveData<List<Product>> getProducts() {
+    public LiveData<ProductResponseModel> getProducts() {
         // Caller should observe this object for changes. When the data has finished
         // async loading, the observer can react accordingly.
-        final MutableLiveData<List<Product>> observable =
-                new MutableLiveData<>(new ArrayList<>());
-
+        final MutableLiveData<ProductResponseModel> observable =
+                new MutableLiveData<>();
         GroovyExecutors.getInstance().getDiskIo().execute(() -> {
+            ProductResponseModel responseModel;
             Result<List<Product>> result = mRepository.getDataSource().loadProducts();
             if (result instanceof Result.Success) {
                 List<Product> resultSet = ((Result.Success<List<Product>>)result).getData();
-                observable.postValue(resultSet);
+                responseModel =
+                        new ProductResponseModel(resultSet, "Success");
+                observable.postValue(responseModel);
             } else {
-                // TODO: Return an error message appropriate for the UI.
-                observable.postValue(new ArrayList<>());
+                responseModel =
+                        new ProductResponseModel(null, "Failure");
+                observable.postValue(responseModel);
             }
         });
 
