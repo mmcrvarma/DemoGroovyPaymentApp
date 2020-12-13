@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.imobile3.groovypayments.MainApplication;
 import com.imobile3.groovypayments.R;
 import com.imobile3.groovypayments.data.model.PaymentType;
 import com.imobile3.groovypayments.logging.LogHelper;
 import com.imobile3.groovypayments.manager.CartManager;
 import com.imobile3.groovypayments.network.WebServiceManager;
+import com.imobile3.groovypayments.network.domainobjects.PaymentResponseHelper;
 import com.imobile3.groovypayments.ui.BaseActivity;
 import com.imobile3.groovypayments.ui.adapter.PaymentTypeListAdapter;
 import com.imobile3.groovypayments.ui.dialog.ProgressDialog;
@@ -22,6 +25,8 @@ import com.stripe.android.ApiResultCallback;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.PaymentIntentResult;
 import com.stripe.android.Stripe;
+import com.stripe.android.model.ConfirmPaymentIntentParams;
+import com.stripe.android.model.PaymentIntent;
 import com.stripe.android.model.PaymentMethodCreateParams;
 import com.stripe.android.view.CardInputWidget;
 
@@ -164,7 +169,33 @@ public class CheckoutActivity extends BaseActivity {
 
         @Override
         public void onSuccess(@NonNull PaymentIntentResult result) {
-            // TODO: Invoke CartManager.getInstance().addCreditPayment()
+            CheckoutActivity a = activityRef.get();
+            if(a == null)
+            {
+                return;
+            }
+            a.dismissProgressDialog();
+            PaymentIntent intent = result.getIntent();
+            if(intent.getStatus() == PaymentIntent.Status.Succeeded)
+            {
+                //Payment succeeded
+                CartManager.getInstance().addCreditPayment(PaymentResponseHelper.transform(intent));
+
+                //Launch checkout confirmation page, after payment successful message is shown.
+                //Gson object to print the intent object in Json readable format.
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                a.showAlertDialog(a.getString(R.string.checkout_payment_completed),
+                        gson.toJson(intent),
+                        a.getString(R.string.common_ok), v -> a.handleCheckoutComplete());
+            }
+            else
+            {
+                //Payment failed
+                a.showAlertDialog(a.getString(R.string.common_server_response_title),
+                        a.getString(R.string.checkout_payment_failed),
+                        a.getString(R.string.common_ok), null);
+            }
+
         }
 
         @Override
@@ -182,21 +213,38 @@ public class CheckoutActivity extends BaseActivity {
     private void handlePayWithCreditClick() {
         PaymentMethodCreateParams params = mCreditCardInputWidget.getPaymentMethodCreateParams();
         if (params != null) {
-            // TODO: Task #008 "Generate the Client Secret... On the Client!"
-            /*
-            1. Invoke WebServiceManager.getInstance().generateClientSecret()
-
-            2. Build the ConfirmPaymentIntentParams from the Credit Widget params using
-               the SDK static method:
-               ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams()
-
-               Android SDK usage is documented here:
-               https://stripe.com/docs/payments/accept-a-payment#android
-
-            3. In the onClientSecretGenerated() callback, construct a new Stripe instance,
-               then invoke stripe.confirmPayment()
-             */
+            showProgressDialog();
+            getClientSecretKey();
         }
+    }
+
+    private void getClientSecretKey()
+    {
+        getViewModel().getClientSecretKey().observe(this, data ->
+        {
+            dismissProgressDialog();
+            if(data.getSecretKey() != null)
+            {
+                //Client secret generated
+                PaymentMethodCreateParams params = mCreditCardInputWidget
+                        .getPaymentMethodCreateParams();
+                ConfirmPaymentIntentParams confirmParams =
+                        ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params,
+                                data.getSecretKey());
+                Stripe stripe = new Stripe(getApplicationContext(),
+                        PaymentConfiguration.getInstance(getApplicationContext()).getPublishableKey());
+                stripe.confirmPayment(this, confirmParams);
+                showProgressDialog();
+            }
+            else
+            {
+                //Show dialog that client secret not generated.
+                showAlertDialog(getString(R.string.client_secret_error),
+                        getString(R.string.client_secret_error_message, data.getErrorMessage()),
+                        getString(R.string.common_ok), null);
+
+            }
+        });
     }
 
     @Override

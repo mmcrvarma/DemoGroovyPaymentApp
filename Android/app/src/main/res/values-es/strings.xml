@@ -106,6 +106,11 @@
     <string name="checkout_complete_customer_message">Gracias por comprar con nosotros: haga
         clic en el botón a continuación para volver a la pantalla de Entrada de pedidos.</string>
     <string name="checkout_complete_groovy">¡Maravilloso!</string>
+    <string name="client_secret_error">CLIENT SECRET ERROR</string>
+    <string name="client_secret_error_message">Error : %1s</string>
+    <string name="checkout_payment_failed">Payment Failed</string>
+    <string name="checkout_payment_completed">Payment Completed</string>
+
 
     <!-- Payment Types -->
     <string name="credit">Crédito</string>
