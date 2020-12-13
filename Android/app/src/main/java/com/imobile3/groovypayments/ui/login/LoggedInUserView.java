@@ -6,13 +6,22 @@ package com.imobile3.groovypayments.ui.login;
 class LoggedInUserView {
 
     private String displayName;
-    //... other data fields that may be accessible to the UI
+    private String userEmail;
+    private String userName;
 
-    LoggedInUserView(String displayName) {
+    LoggedInUserView(String displayName, String userEmail, String userName) {
         this.displayName = displayName;
+        this.userEmail = userEmail;
+        this.userName = userName;
     }
 
     String getDisplayName() {
         return displayName;
+    }
+    String getUserEmail() {
+        return userEmail;
+    }
+    String getUserName() {
+        return userName;
     }
 }
