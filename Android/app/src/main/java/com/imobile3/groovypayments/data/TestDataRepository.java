@@ -6,6 +6,7 @@ import com.imobile3.groovypayments.data.entities.CartTaxEntity;
 import com.imobile3.groovypayments.data.entities.ProductEntity;
 import com.imobile3.groovypayments.data.entities.ProductTaxJunctionEntity;
 import com.imobile3.groovypayments.data.entities.TaxEntity;
+import com.imobile3.groovypayments.data.entities.UserEntity;
 import com.imobile3.groovypayments.data.enums.GroovyColor;
 import com.imobile3.groovypayments.data.enums.GroovyIcon;
 import com.imobile3.groovypayments.data.utils.CartBuilder;
@@ -280,6 +281,53 @@ public class TestDataRepository {
             results.add(CartTaxBuilder.build((cartId * 2) + 7002L,
                     cartId,
                     "7.5% Federal Tax", "0.075"));
+        }
+
+        return results;
+    }
+
+    @NonNull
+    public List<UserEntity> getUsers(@NonNull Environment environment) {
+        List<UserEntity> results = new ArrayList<>();
+        UserEntity result;
+
+        if (Environment.InstrumentationTest == environment) {
+            result = new UserEntity();
+            result.setId(101L);
+            result.setEmail("test1@test.com");
+            result.setFirstName("Test1 First Name");
+            result.setLastName("Test1 Last Name");
+            result.setPassword("Test1 Password");
+            result.setUsername("Test1 Username");
+            results.add(result);
+
+            result = new UserEntity();
+            result.setId(102L);
+            result.setEmail("test2@test.com");
+            result.setFirstName("Test2 First Name");
+            result.setLastName("Test2 Last Name");
+            result.setPassword("Test2 Password");
+            result.setUsername("Test2 Username");
+            results.add(result);
+        }
+        else if (Environment.GroovyDemo == environment) {
+            result = new UserEntity();
+            result.setId(101L);
+            result.setEmail("test1@test1.com");
+            result.setFirstName("Test1 First Name");
+            result.setLastName("Test1 Last Name");
+            result.setPassword("password");
+            result.setUsername("Test1");
+            results.add(result);
+
+            result = new UserEntity();
+            result.setId(102L);
+            result.setEmail("test2@test2.com");
+            result.setFirstName("Test2 First Name");
+            result.setLastName("Test2 Last Name");
+            result.setPassword("password");
+            result.setUsername("Test2");
+            results.add(result);
         }
 
         return results;

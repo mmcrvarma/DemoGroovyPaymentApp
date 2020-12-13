@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.imobile3.groovypayments.R;
 import com.imobile3.groovypayments.ui.BaseActivity;
 import com.imobile3.groovypayments.ui.main.MainDashboardActivity;
+import com.imobile3.groovypayments.utils.SharedPreferencesHelper;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -61,13 +62,13 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
+                if (loginResult.getErrorMessage() != null) {
+                    showLoginFailed(loginResult.getErrorMessage());
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    handleLoginSuccess();
                 }
-                handleLoginSuccess();
             }
         });
 
@@ -111,7 +112,12 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        btnSkipLogin.setOnClickListener(v -> handleLoginSuccess());
+        btnSkipLogin.setOnClickListener(v ->
+        {
+            SharedPreferencesHelper.getInstance().clearAllPrefs();
+            SharedPreferencesHelper.getInstance().setLoggedInStatus(false);
+            handleLoginSuccess();
+        });
     }
 
     @Override
@@ -122,11 +128,21 @@ public class LoginActivity extends BaseActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO: Initiate successful logged in experience
+
+        // Write login details to the preferences.
+        SharedPreferencesHelper prefHelper = SharedPreferencesHelper.getInstance();
+        prefHelper.setDisplayName(model.getDisplayName());
+        prefHelper.setEmail(model.getUserEmail());
+        prefHelper.setUserName(model.getUserName());
+        prefHelper.setLoggedInStatus(true);
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 

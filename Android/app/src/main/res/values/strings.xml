@@ -19,6 +19,7 @@
         elementum lacus elit nec diam. Nullam laoreet dui id dui facilisis lacinia. Sed convallis
         feugiat ex, interdum tincidunt sapien consequat ut.</string>
     <string name="reports">Reports</string>
+    <string name="common_server_response_title">Server Response</string>
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
@@ -30,6 +31,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="login_user_not_found">User not found</string>
+    <string name="login_other_error">Error Logging in</string>
 
     <!-- Main Dashboard -->
     <string name="order_entry_description">Browse the store inventory or sell products to the
@@ -68,6 +71,8 @@
     <!-- Order Entry -->
     <string name="order_entry_subtitle">Add products to the order.</string>
     <string name="order_entry_subtitle_checkout">Click the top-right icon to checkout.</string>
+    <string name="order_entry_retrieve_products_success">Success.</string>
+    <string name="order_entry_retrieve_products_failure">Failure.</string>
 
     <!-- Order History -->
     <string name="order_history_subtitle">Recent orders listed below.</string>
@@ -79,6 +84,8 @@
     <string name="order_history_alert_warning_button">Whatever.</string>
     <string name="order_history_alert_warning_message">You were warned not to click the list items.
         Administrators have been notified.</string>
+    <string name="order_history_retrieve_carts_success">Success.</string>
+    <string name="order_history_retrieve_carts_failure">Failure.</string>
 
     <!--Daily Report-->
     <string name="daily_report_subtitle">Daily Report</string>
@@ -97,6 +104,11 @@
     <string name="checkout_complete_customer_message">Thanks for shopping with us - click the
         button below to return to the Order Entry screen.</string>
     <string name="checkout_complete_groovy">Groovy!</string>
+    <string name="client_secret_error">CLIENT SECRET ERROR</string>
+    <string name="client_secret_error_message">Error : %1s</string>
+    <string name="checkout_payment_failed">Payment Failed</string>
+    <string name="checkout_payment_completed">Payment Completed</string>
+
 
     <!-- Payment Types -->
     <string name="credit">Credit</string>

@@ -20,6 +20,7 @@
         elementum lacus elit nec diam. Nullam laoreet dui id dui facilisis lacinia. Sed convallis
         feugiat ex, interdum tincidunt sapien consequat ut.</string>
     <string name="reports">Informes</string>
+    <string name="common_server_response_title">Server Response</string>
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
@@ -31,6 +32,8 @@
     <string name="invalid_username">No es un nombre de usuario válido</string>
     <string name="invalid_password">La contraseña debe tener >5 caracteres</string>
     <string name="login_failed">"Error de inicio de sesion"</string>
+    <string name="login_user_not_found">User not found</string>
+    <string name="login_other_error">Error Logging in</string>
 
     <!-- Main Dashboard -->
     <string name="order_entry_description">Explore el inventario de la tienda o venda
@@ -73,6 +76,8 @@
     <string name="order_entry_subtitle">Añadir productos al pedido.</string>
     <string name="order_entry_subtitle_checkout">Haga clic en el icono superior derecho para
         finalizar la compra.</string>
+    <string name="order_entry_retrieve_products_success">Success.</string>
+    <string name="order_entry_retrieve_products_failure">Failure.</string>
 
     <!-- Order History -->
     <string name="order_history_subtitle">Pedidos recientes listados a continuación.</string>
@@ -84,6 +89,8 @@
     <string name="order_history_alert_warning_button">Lo que sea.</string>
     <string name="order_history_alert_warning_message">Se le advirtió que no haga clic en los
         elementos de la lista. Los administradores han sido notificados.</string>
+    <string name="order_history_retrieve_carts_success">Success.</string>
+    <string name="order_history_retrieve_carts_failure">Failure.</string>
 
     <!--Daily Report-->
     <string name="daily_report_subtitle">Reporte Diario</string>
@@ -101,6 +108,11 @@
     <string name="checkout_complete_customer_message">Gracias por comprar con nosotros: haga
         clic en el botón a continuación para volver a la pantalla de Entrada de pedidos.</string>
     <string name="checkout_complete_groovy">¡Maravilloso!</string>
+    <string name="client_secret_error">CLIENT SECRET ERROR</string>
+    <string name="client_secret_error_message">Error : %1s</string>
+    <string name="checkout_payment_failed">Payment Failed</string>
+    <string name="checkout_payment_completed">Payment Completed</string>
+
 
     <!-- Payment Types -->
     <string name="credit">Crédito</string>
