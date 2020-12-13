@@ -12,6 +12,7 @@ import com.imobile3.groovypayments.data.enums.GroovyColor;
 import com.imobile3.groovypayments.data.enums.GroovyIcon;
 import com.imobile3.groovypayments.data.model.Cart;
 import com.imobile3.groovypayments.rules.CartRules;
+import com.imobile3.groovypayments.rules.CurrencyRules;
 import com.imobile3.groovypayments.utils.StateListHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartListAdapter
         extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
@@ -66,6 +68,11 @@ public class CartListAdapter
         holder.description.setText(rules.getOrderHistoryDescription());
         holder.description.setTextColor(
                 StateListHelper.getTextColorSelector(mContext, R.color.gray_down_pour));
+
+        //Bind the cart total and date
+        //User Currency rules for cart price
+        holder.labelTotal.setText(new CurrencyRules().getCartTotal(item, Locale.getDefault()));
+        holder.labelDate.setText(rules.getFormattedDate(Locale.getDefault()));
     }
 
     @Override
