@@ -1,5 +1,7 @@
 package com.imobile3.groovypayments.ui.orderentry;
 
+import com.imobile3.groovypayments.MainApplication;
+import com.imobile3.groovypayments.R;
 import com.imobile3.groovypayments.concurrent.GroovyExecutors;
 import com.imobile3.groovypayments.data.ProductRepository;
 import com.imobile3.groovypayments.data.Result;
@@ -36,11 +38,13 @@ public class OrderEntryViewModel extends ViewModel {
             if (result instanceof Result.Success) {
                 List<Product> resultSet = ((Result.Success<List<Product>>)result).getData();
                 responseModel =
-                        new ProductResponseModel(resultSet, "Success");
+                        new ProductResponseModel(resultSet,
+                                MainApplication.getInstance().getString(R.string.order_entry_retrieve_products_success));
                 observable.postValue(responseModel);
             } else {
                 responseModel =
-                        new ProductResponseModel(null, "Failure");
+                        new ProductResponseModel(null,
+                                MainApplication.getInstance().getString(R.string.order_entry_retrieve_products_failure));
                 observable.postValue(responseModel);
             }
         });

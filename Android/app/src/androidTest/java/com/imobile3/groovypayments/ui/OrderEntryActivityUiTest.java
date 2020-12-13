@@ -16,8 +16,6 @@ import com.imobile3.groovypayments.data.DatabaseHelper;
 import com.imobile3.groovypayments.data.GroovyDemoManager;
 import com.imobile3.groovypayments.ui.orderentry.OrderEntryActivity;
 
-import junit.framework.AssertionFailedError;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -26,18 +24,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.hamcrest.Matchers.allOf;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class OrderEntryActivityUiTest {
+public class OrderEntryActivityUiTest
+{
 
     @Rule
     public ActivityTestRule<OrderEntryActivity> mActivityRule =
@@ -71,11 +67,13 @@ public class OrderEntryActivityUiTest {
     /**
      * Custom matcher to find the itemView inside RecyclerView.ViewHolder that matches the
      * view being tested, and then confirm that the element in itemView is ImageView or not.
+     *
      * @param position
      * @param itemMatcher
      * @return
      */
-    public static Matcher<View> withViewAtPosition(final int position, final Matcher<View> itemMatcher) {
+    public static Matcher<View> withViewAtPosition(final int position, final Matcher<View> itemMatcher)
+    {
         return new BoundedMatcher(RecyclerView.class) {
             @Override
             public void describeTo(Description description) {
@@ -83,15 +81,13 @@ public class OrderEntryActivityUiTest {
             }
 
             @Override
-            protected boolean matchesSafely(Object item) {
-                final RecyclerView.ViewHolder viewHolder = ((RecyclerView)item).findViewHolderForAdapterPosition(position);
-                if(viewHolder != null && itemMatcher.matches(viewHolder.itemView)
-                        && viewHolder.itemView.findViewById(R.id.icon) instanceof ImageView)
-                {
+            protected boolean matchesSafely(Object item)
+            {
+                final RecyclerView.ViewHolder viewHolder = ((RecyclerView) item).findViewHolderForAdapterPosition(position);
+                if (viewHolder != null && itemMatcher.matches(viewHolder.itemView)
+                        && viewHolder.itemView.findViewById(R.id.icon) instanceof ImageView) {
                     return true;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
             }
