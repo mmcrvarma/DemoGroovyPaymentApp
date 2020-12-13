@@ -48,9 +48,11 @@
                 android:tint="@android:color/white" />
 
             <LinearLayout
+                android:id="@+id/username_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_xlarge"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -60,7 +62,6 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_username"
-                    android:visibility="gone"
                     tools:visibility="visible" />
 
                 <TextView
@@ -75,9 +76,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/email_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -87,7 +90,6 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_email"
-                    android:visibility="gone"
                     tools:visibility="visible" />
 
                 <TextView
@@ -102,9 +104,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/hours_week_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -114,7 +118,6 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_hours_week"
-                    android:visibility="gone"
                     tools:visibility="visible" />
 
                 <TextView

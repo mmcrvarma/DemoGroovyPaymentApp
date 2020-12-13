@@ -31,6 +31,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="login_user_not_found">User not found</string>
+    <string name="login_other_error">Error Logging in</string>
 
     <!-- Main Dashboard -->
     <string name="order_entry_description">Browse the store inventory or sell products to the
